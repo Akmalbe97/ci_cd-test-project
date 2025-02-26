@@ -23,7 +23,7 @@ jobs:
           USER: ${{secrets.USERNAME}}
           APP_DIR: /ci_cd
           PORT: ${{secrets.PORT}}
-        run: |  # ❗ BU YERDA "run:" QATORI ICHKARI SURILDI
+        run: |
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $USER@$HOST "
             if [ ! -d $APP_DIR ]; then
