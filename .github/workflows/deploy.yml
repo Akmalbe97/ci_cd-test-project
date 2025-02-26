@@ -1,4 +1,4 @@
-name: Deploy to VPS project
+name: Deploy to VPS 
 on:
   push:
     branches:
