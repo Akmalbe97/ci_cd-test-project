@@ -13,8 +13,8 @@ jobs:
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{secrets.SSH_PRIVATE_KEY}}" >~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/authorized_keys
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
         shell: bash
 
       - name: Deploy to server
@@ -23,9 +23,9 @@ jobs:
           USER: ${{secrets.USERNAME}}
           APP_DIR: /ci_cd
           PORT: ${{secrets.PORT}}
-        run: |
+        run: |  # ❗ BU YERDA "run:" QATORI ICHKARI SURILDI
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
-          ssh $USER@$HOST "
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $USER@$HOST "
             if [ ! -d $APP_DIR ]; then
               mkdir -p $APP_DIR
               git clone https://github.com/Akmalbe97/ci_cd-test-project.git $APP_DIR
@@ -48,4 +48,3 @@ jobs:
             pm2 save
           "
         shell: bash
-
